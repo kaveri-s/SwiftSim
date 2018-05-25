@@ -117,7 +117,7 @@ def netDelay(size,op,method):
 				wl.append(totalNetDelay)
 				
 		#print(totalNetDelay)
-		print(wl)
+		print(wl[-1])
 
 
 	

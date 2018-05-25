@@ -40,7 +40,7 @@ def ioTime(pos,size):
 	#	totalTime+=time
 	totalTime=(1500.0*noOfPackets*uniqueServers)/(iorate * len(part))
 	eachobjTime.append(totalTime)
-	print(eachobjTime)
+	print(eachobjTime[-1])
 	
 #print(uniqueServers)
 #print(part)

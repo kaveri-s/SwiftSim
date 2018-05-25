@@ -55,7 +55,10 @@ def name_gen(size=10, chars=string.ascii_uppercase + string.ascii_lowercase):
 #main code begins here
 with open('workload.json') as f:
 	data = json.load(f, object_hook=ascii_encode_dict)
-	print(data)
+
+	print("\nJson Loaded")
+	for key, value in data.items():
+		print(key, ":", value)
 
 if(data["delete"]>data["create"] or data["read"]>data["create"]):
 	print("Invalid Workload")
@@ -78,6 +81,7 @@ for c in range(0, data["create"]):
 	size = size_gen(data["type"])
 	ext = random.randint(0,5)
 	objname = name_gen()+'.'+extensions[ext]
+	print("################################################################################")
 	command = 'python new_swift.py 3 PUT test '+objname+' w '+str(size)
 	print(command)
 	# os.system(command)
@@ -96,10 +100,10 @@ for c in range(0, data["create"]):
 		objstore.append([objname, size, result[0]])
 		#calc network
 		#print(size)
-		print("Network ##################################")
+		print("\nNetwork Time:")
 		networkTime.netDelay(size,c,1)
 		#calc io
-		print("IO !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+		print("\nIO Time: ")
 		sio.ioTime(2,size)
 	else:
 		print('No space. Object not stored')
@@ -107,24 +111,29 @@ for c in range(0, data["create"]):
 			data["delete"]-=1
 		if data["read"]==data["create"]:
 			data["read"]-=1
-print(objstore)			
+	print("################################################################################")
+#print("Current list of objects: ")
+#print(objstore)			
 
 #read commands
 for r in range(0, data["read"]):
+	print("################################################################################")	
 	command = 'python new_swift.py 3 GET test '+objstore[r][0]+' w '+str(objstore[r][1])
 	print(command)
 	# os.system(command)
 
 	#calc network
-	print("Network ##################################")
+	print("\nNetwork Time:")
 	networkTime.netDelay(size,r+data["create"],1)
 	#io.ioTime(int(result[0]),size)
-	print("IO !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+	print("\nIO Time: ")
 	sio.ioTime(2,size)
 	#calc io
+	print("################################################################################")
 
 #delete commands
 for d in range(0, data["delete"]):
+	print("################################################################################")
 	command = 'python new_swift.py 3 DELETE test '+objstore[d][0]+' w '+str(objstore[d][1])
 	print(command)
 	# os.system(command)
@@ -134,6 +143,7 @@ for d in range(0, data["delete"]):
 	conn.commit()
 	l = objstore[d]
 	objstore.remove(l)
+	print("################################################################################")
 
 #print(objstore)
 	
