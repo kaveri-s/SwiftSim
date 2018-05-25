@@ -1,0 +1,9 @@
+{
+"racks" : 2,
+"servers" : 5,
+"storage" : 200,
+"type" : "max",
+"create" : 3,
+"read" : 2,
+"delete" : 1
+}
